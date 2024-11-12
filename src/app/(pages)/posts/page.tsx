@@ -56,9 +56,6 @@ function Posts() {
       })
   }
 
-  console.log(postsStore.isOpenAddPostModal);
-  console.log(postsStore.isOpenUpdateModal);
-
   return (
     <div>
       <button onClick={handleOpenModal}>Add</button>

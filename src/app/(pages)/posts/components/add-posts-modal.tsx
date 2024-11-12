@@ -1,9 +1,11 @@
+"use client"
 
 import Button from "@/components/Button/Button";
 import Modal from "@/components/Modal/Modal";
 import { postsApi } from "@/services/posts/posts";
 import { useStores } from "@/store/store-context";
 import { useFormik } from "formik";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 function AddPostModal() {
