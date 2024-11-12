@@ -1,9 +1,30 @@
+"use client"
+
+import { signIn } from "next-auth/react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSignUp = async () => {
+    try {
+      const result = await signIn("github", { redirect: false });
+      if (result?.error) {
+        setError("GitHub orqali tizimga kira olmadim.");
+      } else {
+        console.log("Foydalanuvchi muvaffaqiyatli ro'yxatdan o'tdi");
+      }
+    } catch (err) {
+      setError("Ro'yxatdan o'tishda xatolik yuz berdi.");
+    }
+  };
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        <button onClick={handleSignUp}>GitHub bilan ro'yxatdan o'tish</button>
+
         <Image
           className="dark:invert"
           src="/next.svg"

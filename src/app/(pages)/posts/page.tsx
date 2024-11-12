@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import AddPostModal from "./components/add-posts-modal";
 import { toast } from "react-toastify";
 import UpdatePostModal from "./components/update-posts-modal";
+import { signIn, signOut } from "next-auth/react";
 
 function Posts() {
   const {postsStore} = useStores()
@@ -30,6 +31,14 @@ function Posts() {
   const handleOpenModal = () => {
     postsStore.setIsOpenAddPostModal(true);
   };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut({ redirect: true });
+    } catch (error) {
+      toast.error('Error during sign-out');
+    }
+  }
 
   const handleUpdatePost = (post: IPost) => {
     postsStore.setUpdatePost(post)
@@ -53,6 +62,7 @@ function Posts() {
   return (
     <div>
       <button onClick={handleOpenModal}>Add</button>
+      <button onClick={handleSignOut}>Sign out</button>
 
       <h1>Salom</h1>
       {postsStore.myAllPosts?.map((post: IPost, index) => (
