@@ -1,31 +1,40 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import type { NextAuthOptions } from "next-auth";
-import Github from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase/firebase";
+import { signInUser } from "./baseaction";
 
 export const options: NextAuthOptions = {
+  session: {
+    strategy: 'jwt',
+  },
   secret: process.env.NEXTAUTH_SECRET,
   debug: true,
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      type: 'credentials',
+      name: "Firebase Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "Your username" },
-        password: { label: "Password", type: "password", placeholder: "Your password"}
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        const user = { id: "1", name: "J Smith", email: "jsmith@example.com" }
+      async authorize(credentials) {
+        if (!credentials) return null;
+        try {
+          const user = await signInUser(credentials!);
 
-        if (user) {
-          return user
-        } else {
-          return null
+          if (user) {
+            return { ...user, id: user.uid };
+          }
+
+          return null;
+        } catch (error) {
+          return null;
         }
-      }
-    })
+      },
+    }),
   ],
   pages: {
-    signIn: '/signin',
-  }
+    signIn: "/signin",
+    error: "/signin",
+  },
 };

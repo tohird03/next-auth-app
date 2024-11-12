@@ -6,3 +6,7 @@ export interface IAuthForm {
 export interface ISignUpForm extends IAuthForm {
   fullname: string,
 }
+
+export interface IUser extends ISignUpForm  {
+  id: string
+}
