@@ -13,7 +13,7 @@ export default function AppLayout ({
   session: Session | null
 }>) {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider>
       <Header />
       {children}
     </SessionProvider>
