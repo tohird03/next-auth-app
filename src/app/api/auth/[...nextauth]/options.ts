@@ -1,7 +1,9 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { signInUser } from "./baseaction";
+import { IUser } from "@/types/dto/auth";
+import { JWT } from "next-auth/jwt";
 
 export const options: NextAuthOptions = {
   session: {
@@ -33,6 +35,26 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }: { session: Session; token: JWT }): Promise<Session> {
+      if (token) {
+        session.user = {
+          id: token.id as string,
+          fullname: token.fullname as string,
+          username: token.username as string,
+        } as any;
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.fullname = (user as any).fullname;
+        token.username = (user as any).username;
+      }
+      return token;
+    },
+  },
   pages: {
     signIn: "/signin",
     error: "/signin",

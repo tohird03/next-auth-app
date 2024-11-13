@@ -10,7 +10,21 @@ class PostsApi extends Instance {
   createMyPostToBase = (params: IPost) =>
     addDoc(collection(db, "my-posts"), params);
 
-  getMyPostFromBase = async (myId: number) => {
+  getAllBasePosts = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "my-posts"));
+      const posts: IPost[] = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as IPost[];
+      return posts;
+    } catch (error) {
+      console.error("Error fetching posts: ", error);
+      throw new Error("Failed to fetch posts");
+    }
+  };
+
+  getMyPostFromBase = async (myId: string) => {
     const q = query(collection(db, "my-posts"), where("userId", "==", myId));
     const querySnapshot = await getDocs(q);
 

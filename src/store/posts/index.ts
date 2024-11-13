@@ -8,19 +8,30 @@ class PostsStore {
   isOpenUpdateModal = false
   isOpenConfirmDelete = false
   updatePost: IPost | null = null;
+  allDbPosts: IPost[] = []
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getMyAllPosts = (myId: number) =>
+  getMyAllPosts = (myId: string) =>
     postsApi.getMyPostFromBase(myId)
-    .then((res) => {
-      this.myAllPosts = res
-    })
-    .catch(() => {
-      toast.error('Smth wrong')
-    })
+      .then((res) => {
+        this.myAllPosts = res
+      })
+      .catch(() => {
+        toast.error('Smth wrong')
+      })
+
+  getAllFirePost = () => {
+    postsApi.getAllBasePosts()
+      .then((res) => {
+        this.allDbPosts = res
+      })
+      .catch(() => {
+        toast.error('Smth wrong')
+      })
+  }
 
   setIsOpenAddPostModal = (isOpen: boolean) => {
     this.isOpenAddPostModal = isOpen

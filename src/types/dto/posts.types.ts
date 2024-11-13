@@ -3,6 +3,10 @@ interface IPost {
   id?: number | string;
   title: string;
   body: string;
+  user: {
+    fullname: string,
+    username: string,
+  }
 }
 interface IAddPostForm {
   title: string,

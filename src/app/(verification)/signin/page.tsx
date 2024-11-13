@@ -3,6 +3,7 @@
 import { IAuthForm } from "@/types/dto/auth";
 import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -72,6 +73,8 @@ export default function SignIn() {
               </div>
             </div>
             <div className="flex items-center justify-end mt-4">
+              <Link href="/signup" className="">Sign Up</Link>
+
               <button
                 type="submit"
                 className="ms-4 inline-flex items-center px-4 py-2 bg-[#f84525] border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-800 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
@@ -79,6 +82,7 @@ export default function SignIn() {
                 Sign In
               </button>
             </div>
+            <Link href="/" className="underline flex justify-center mt-3">Back to Home</Link>
           </form>
         </div>
       </div>
