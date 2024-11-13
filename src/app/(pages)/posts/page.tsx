@@ -20,7 +20,7 @@ function Posts() {
   const { data: session, status } = useSession()
 
   if (status === "unauthenticated") {
-    return redirect('/signin')
+    return redirect('/')
   }
 
   const handleOpenModal = () => {
