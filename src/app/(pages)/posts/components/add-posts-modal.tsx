@@ -18,6 +18,8 @@ function AddPostModal() {
       body: '',
     },
     onSubmit: async (values: IAddPostForm) => {
+      console.log(session);
+      
       try {
         await postsApi.createMyPostToBase({
           ...values,

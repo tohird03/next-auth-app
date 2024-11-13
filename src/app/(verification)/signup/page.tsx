@@ -31,6 +31,7 @@ export default function SignUp() {
 
             if (result?.error) {
               router.push("/signin");
+              toast.error("An error occurred during sign-in.");
             } else {
               router.push("/posts");
             }
