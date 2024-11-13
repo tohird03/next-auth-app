@@ -19,7 +19,7 @@ export default function Header() {
 
   const handleSignOut = async () => {
     try {
-      await signOut({ redirect: true });
+      await signOut({ redirect: false });
     } catch (error) {
       toast.error("Error during sign-out");
     }
