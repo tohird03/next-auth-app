@@ -7,10 +7,8 @@ import React from "react";
 
 export default function AppLayout ({
   children,
-  session,
 }: Readonly<{
   children: React.ReactNode;
-  session: Session | null
 }>) {
   return (
     <SessionProvider>
