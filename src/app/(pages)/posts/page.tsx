@@ -12,12 +12,16 @@ import UpdatePostModal from "./components/update-posts-modal";
 import { postsApi } from "@/services/posts/posts";
 import { useStores } from "@/store/store-context";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { redirect } from "next/navigation";
 
 function Posts() {
   const { postsStore } = useStores();
   const [posts, setPosts] = useState<IPost[]>([]);
+  const { data: session, status } = useSession()
 
-  const { data: session } = useSession();
+  if (status === "unauthenticated") {
+    return redirect('/signin')
+  }
 
   const handleOpenModal = () => {
     postsStore.setIsOpenAddPostModal(true);
